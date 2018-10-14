@@ -17,8 +17,8 @@ class PenyesuaianTableUsers extends Migration
             $table->string('username')->unique();
             $table->string('roles');
             $table->text('address')->nullable();
-            $table->string('phone')->default('0');
-            $table->string('avatar')->default('default.jpg');
+            $table->string('phone')->nullable();
+            $table->string('avatar')->nullable();
             $table->enum('status', ['ACTIVE', 'INACTIVE']);
         });
     }
