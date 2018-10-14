@@ -65,7 +65,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = \App\User::findOrFail($id); 
+ 
+        return view('users.show', ['user' => $user]);
     }
 
     /**
@@ -116,6 +118,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = \App\User::findOrFail($id); 
+ 
+        $user->delete(); 
+    
+        return redirect()->route('users.index')->with('status', 'User successfully delete'); 
     }
 }

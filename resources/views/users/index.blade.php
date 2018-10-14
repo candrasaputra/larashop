@@ -3,7 +3,12 @@
 @section("title") Users list @endsection  
  
 @section("content") 
- 
+    @if(session('status'))
+        <div class="alert alert-success">
+            {{session('status')}}
+        </div>
+    @endif
+
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -28,7 +33,13 @@
                     @endif
                 </td>
                 <td>
+                    <a class="btn btn-primary text-white btn-sm" href="{{route('users.show', ['id'=>$user->id])}}">Detail</a>
                     <a class="btn btn-info text-white btn-sm" href="{{route('users.edit', ['id'=>$user->id])}}">Edit</a>
+                    <form onsubmit="return confirm('Delete this user permanently?')" class="d-inline" action="{{route('users.destroy', ['id' => $user->id ])}}" method="POST"> 
+                        @csrf
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+                    </form>
                 </td>
             </tr>
             @endforeach
