@@ -9,18 +9,20 @@
         </div>
     @endif
 
-    <div class="row">
-        <div class="col-md-6">
-            <form action="{{route('users.index')}}">
-                <div class="input-group mb-3">
-                    <input value="{{Request::get('keyword')}}"  name="keyword"  class="form-control col-md-10"  type="text" placeholder="Filter berdasarkan email"/>
-                    <div class="input-group-append">
-                        <input type="submit" value="Filter" class="btn btn-primary">
-                    </div>
-                </div>
-            </form>
+    <form action="{{route('users.index')}}">
+        <div class="row">
+            <div class="col-md-6">
+                <input value="{{Request::get('keyword')}}" name="keyword" class="form-control" type="text" placeholder="Masukan email untuk filter..."/>
+            </div>
+            <div class="col-md-6">
+                <input {{Request::get('status') == 'ACTIVE' ? 'checked' : ''}} value="ACTIVE" name="status" type="radio" class="form-control" id="active">
+                <label for="active">Active</label>
+                <input {{Request::get('status') == 'INACTIVE' ? 'checked' : ''}} value="INACTIVE" name="status" type="radio" class="form-control" id="inactive">
+                <label for="inactive">Inactive</label>
+                <input type="submit" value="Filter" class="btn btn-primary">
+            </div>
         </div>
-    </div>
+    </form>
 
     <div class="row">
         <div class="col-md-12 text-right">
@@ -36,6 +38,7 @@
                 <th><b>Username</b></th>
                 <th><b>Email</b></th>
                 <th><b>Avatar</b></th>
+                <th><b>Status</b></th>
                 <th><b>Action</b></th>
             </tr>
         </thead>
@@ -50,6 +53,17 @@
                       <img src="{{asset('storage/'.$user->avatar)}}" width="70px"/>
                     @else
                       N/A
+                    @endif
+                </td>
+                <td>
+                    @if($user->status == "ACTIVE")
+                        <span class="badge badge-success">
+                            {{$user->status}}
+                        </span>
+                    @else
+                        <span class="badge badge-danger">
+                            {{$user->status}}
+                        </span>
                     @endif
                 </td>
                 <td>
